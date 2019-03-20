@@ -12,15 +12,14 @@ class ContactDetailCell: UITableViewCell {
 
     @IBOutlet weak var PhoneNumber: UILabel!
     @IBOutlet weak var ContactName: UILabel!
+    var Email : String = String()
+    var Photo : UIImage = UIImage(named: "Anna")!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }
