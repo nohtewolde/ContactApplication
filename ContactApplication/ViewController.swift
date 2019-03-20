@@ -18,7 +18,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func passingStringValue(name: String, number: String, email: String, photo: UIImage) {
+    func passingContactDetail(name: String, number: String, email: String, photo: UIImage) {
         contactList.append(Person(name: name, phone: number, email: email, photo: photo))
         print("In VC \(name)")
         tbl.reloadData()
@@ -41,16 +41,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let c = tbl.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ContactDetailCell
-        
-        c?.ContactName.text = contactList[indexPath.row].name
-        c?.PhoneNumber.text = contactList[indexPath.row].phone
-        c?.Email = contactList[indexPath.row].email
-        c?.Photo = contactList[indexPath.row].photo
+        let obj = contactList[indexPath.row]
+        c?.ContactName.text = obj.name
+        c?.PhoneNumber.text = obj.phone
+        c?.Email = obj.email
+        c?.Photo = obj.photo
         return c!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailDisplay") as? DetailDisplay
+        //pass object instead
         vc?.name = contactList[indexPath.row].name
         vc?.phone = contactList[indexPath.row].phone
         vc?.email = contactList[indexPath.row].email
@@ -62,15 +63,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 
 struct Person {
-    var name : String = String()
-    var phone : String = String()
-    var email : String = String()
-    var photo : UIImage = UIImage()
-    init(name : String, phone : String, email : String, photo : UIImage){
-        self.name = name
-        self.phone = phone
-        self.email = email
-        self.photo = photo
-    }
+    var name : String
+    var phone : String
+    var email : String
+    var photo : UIImage
+    
 }
 

@@ -10,7 +10,7 @@ import UIKit
 
 // Using Delegate to pass
 @objc protocol DetailVCDelegate: class {
-    func passingStringValue(name : String, number : String, email: String, photo: UIImage)
+    func passingContactDetail(name : String, number : String, email: String, photo: UIImage)
 }
 
 class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
@@ -28,7 +28,7 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
     }
 
     @IBAction func btnSubmit(_ sender: UIButton) {
-        delegate?.passingStringValue(name: txtContactName.text!, number: txtPhoneNumber.text!, email: txtEmail.text!, photo: imgPhoto.image!)
+        delegate?.passingContactDetail(name: txtContactName.text!, number: txtPhoneNumber.text!, email: txtEmail.text!, photo: imgPhoto.image!)
         navigationController?.popViewController(animated: true)
     }
     
