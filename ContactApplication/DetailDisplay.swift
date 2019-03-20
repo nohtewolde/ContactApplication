@@ -6,6 +6,8 @@
 //  Copyright © 2019 Noh Tewolde. All rights reserved.
 //
 
+//  This class simply displays the detailed information of a contact
+
 import UIKit
 
 class DetailDisplay: UIViewController{
@@ -14,17 +16,14 @@ class DetailDisplay: UIViewController{
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblEmail: UILabel!
     @IBOutlet weak var imgPhoto: UIImageView!
-    
-    var name : String = String()
-    var phone : String = String()
-    var email : String = String()
-    var photo : UIImage = UIImage()
+
+    var objPerson : Person?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        lblName.text = name
-        lblPhone.text = phone
-        lblEmail.text = email
-        imgPhoto.image = photo
+        lblName.text = objPerson?.name
+        lblPhone.text = objPerson?.phone
+        lblEmail.text = objPerson?.email
+        imgPhoto.image = objPerson?.photo
     }
 }

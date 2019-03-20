@@ -5,6 +5,7 @@
 //  Created by Noh Tewolde on 3/19/19.
 //  Copyright © 2019 Noh Tewolde. All rights reserved.
 //
+//  This class inserts the contact details of a person
 
 import UIKit
 

@@ -51,11 +51,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailDisplay") as? DetailDisplay
-        //pass object instead
-        vc?.name = contactList[indexPath.row].name
-        vc?.phone = contactList[indexPath.row].phone
-        vc?.email = contactList[indexPath.row].email
-        vc?.photo = contactList[indexPath.row].photo
+        let objPerson = contactList[indexPath.row]
+        vc?.objPerson = objPerson
         navigationController?.pushViewController(vc!, animated: true)
     }
 }
