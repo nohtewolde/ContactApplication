@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetailVCDelegate {
-    
+   
     @IBOutlet weak var tbl: UITableView!
     var contactList = [Person(name : "Anna", phone : "123456", email: "anna@disney.com", photo :  UIImage(named: "Anna")!), Person(name : "Belle", phone : "234567", email: "belle@disney.com", photo: UIImage(named: "Belle")!),Person(name : "Cinderella", phone : "345678", email: "cinderella@disney.com", photo: UIImage(named: "Cinderella")!), Person(name : "Diana", phone : "456789", email: "diana@nothinghampalace.com", photo: UIImage(named: "Diana")!), Person(name : "Elsa", phone : "567890", email: "elsa@disney.com", photo: UIImage(named: "Elsa")!)]
     
@@ -18,13 +18,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func passingContactDetail(objPerson: Person) {
-        contactList.append(objPerson)
+    func passingContactDetail(objPerson: Person, isModified: Bool, isNewContact: Bool, row: Int, section: Int){
+        if isNewContact {
+            contactList.append(objPerson)
+        }
+        else if isModified {
+            contactList[row].name = objPerson.name
+            contactList[row].phone = objPerson.phone
+            contactList[row].email = objPerson.email
+            contactList[row].photo = objPerson.photo
+        }
         tbl.reloadData()
     }
     
     @IBAction func btnAddContact(_ sender: UIBarButtonItem) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVCViewController") as? DetailVCViewController
+        vc?.isNewContact = true
         vc?.delegate = self
         navigationController?.pushViewController(vc!, animated: true)
     }
@@ -51,9 +60,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVCViewController") as? DetailVCViewController
         let objPerson = contactList[indexPath.row]
         vc?.person = objPerson
+        vc?.row = indexPath.row
+        vc?.section = indexPath.section
+        vc?.isNewContact = false
         vc?.delegate = self
         navigationController?.pushViewController(vc!, animated: true)
-
     }
 }
 

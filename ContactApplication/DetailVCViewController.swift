@@ -11,7 +11,7 @@ import UIKit
 
 // Using Delegate to pass
 protocol DetailVCDelegate: class {
-    func passingContactDetail(objPerson : Person)
+    func passingContactDetail(objPerson : Person, isModified : Bool, isNewContact: Bool, row: Int, section: Int)
 }
 
 class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
@@ -22,6 +22,14 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
     
     var delegate: DetailVCDelegate?
     var person: Person?
+    var isNewContact : Bool? = Bool()       // If contact is new then add it to the list of contacts
+    var row : Int? = Int()                  // If it is existing contact keep its row and section data ...
+    var section : Int? = Int()              // for potential modification
+    var originalName : String? = String()
+    var originalPhoneNumber : String? = String()
+    var originalEmail  : String? = String()
+    var originalPhoto : UIImage? = UIImage()
+    var modified : Bool = Bool()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +37,25 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
         txtPhoneNumber.text = person?.phone
         txtEmail.text = person?.email
         imgPhoto.image = person?.photo
+        
+        if !(isNewContact)! {
+            originalName = person?.name
+            originalPhoneNumber = person?.phone
+            originalEmail = person?.email
+            originalPhoto = person?.photo
+        }
     }
 
     @IBAction func btnSubmit(_ sender: UIButton) {
         let obj : Person = Person(name: txtContactName.text!, phone: txtPhoneNumber.text!, email: txtEmail.text!, photo: imgPhoto.image!)
-        delegate?.passingContactDetail(objPerson: obj)
+        if !isNewContact! {
+            modified = !(originalName == txtContactName.text && originalPhoneNumber == txtPhoneNumber.text && originalEmail == txtEmail.text && originalPhoto == imgPhoto.image )
+        }else if isNewContact!{
+            modified = false
+        }
+            print("Modified is : \(modified)")
+        
+        delegate?.passingContactDetail(objPerson: obj, isModified: modified, isNewContact: isNewContact!, row: row!, section: section!)
         navigationController?.popViewController(animated: true)
     }
     
