@@ -21,12 +21,14 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var imgPhoto: UIImageView!
     
     var delegate: DetailVCDelegate?
-    
-    
+    var person: Person?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        txtContactName.text = person?.name
+        txtPhoneNumber.text = person?.phone
+        txtEmail.text = person?.email
+        imgPhoto.image = person?.photo
     }
 
     @IBAction func btnSubmit(_ sender: UIButton) {

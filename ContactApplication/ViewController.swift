@@ -27,7 +27,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVCViewController") as? DetailVCViewController
         vc?.delegate = self
         navigationController?.pushViewController(vc!, animated: true)
-        
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -39,20 +38,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let c = tbl.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ContactDetailCell
+        let cell = tbl.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ContactDetailCell
         let obj = contactList[indexPath.row]
-        c?.ContactName.text = obj.name
-        c?.PhoneNumber.text = obj.phone
-        c?.Email = obj.email
-        c?.Photo = obj.photo
-        return c!
+        cell?.ContactName.text = obj.name
+        cell?.PhoneNumber.text = obj.phone
+        cell?.Email = obj.email
+        cell?.Photo = obj.photo
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailDisplay") as? DetailDisplay
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVCViewController") as? DetailVCViewController
         let objPerson = contactList[indexPath.row]
-        vc?.objPerson = objPerson
+        vc?.person = objPerson
+        vc?.delegate = self
         navigationController?.pushViewController(vc!, animated: true)
+
     }
 }
 
