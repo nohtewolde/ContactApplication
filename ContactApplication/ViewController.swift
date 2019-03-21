@@ -18,9 +18,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func passingContactDetail(name: String, number: String, email: String, photo: UIImage) {
-        contactList.append(Person(name: name, phone: number, email: email, photo: photo))
-        print("In VC \(name)")
+    func passingContactDetail(objPerson: Person) {
+        contactList.append(objPerson)
         tbl.reloadData()
     }
     
@@ -64,6 +63,5 @@ struct Person {
     var phone : String
     var email : String
     var photo : UIImage
-    
 }
 

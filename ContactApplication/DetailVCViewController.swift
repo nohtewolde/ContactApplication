@@ -10,8 +10,8 @@
 import UIKit
 
 // Using Delegate to pass
-@objc protocol DetailVCDelegate: class {
-    func passingContactDetail(name : String, number : String, email: String, photo: UIImage)
+protocol DetailVCDelegate: class {
+    func passingContactDetail(objPerson : Person)
 }
 
 class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
@@ -23,13 +23,15 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
     var delegate: DetailVCDelegate?
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
 
     @IBAction func btnSubmit(_ sender: UIButton) {
-        delegate?.passingContactDetail(name: txtContactName.text!, number: txtPhoneNumber.text!, email: txtEmail.text!, photo: imgPhoto.image!)
+        let obj : Person = Person(name: txtContactName.text!, phone: txtPhoneNumber.text!, email: txtEmail.text!, photo: imgPhoto.image!)
+        delegate?.passingContactDetail(objPerson: obj)
         navigationController?.popViewController(animated: true)
     }
     
