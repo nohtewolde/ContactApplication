@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Es6-PY-wBy">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="124" width="375" height="543"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="139" id="udg-j0-9CA" customClass="ContactDetailCell" customModule="ContactApplication" customModuleProvider="target">
@@ -62,13 +62,24 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Q8N-f2-sli"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="LhV-9T-Ahk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="60"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="FvV-vF-XZe"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Es6-PY-wBy" secondAttribute="trailing" id="8WM-XB-VfL"/>
-                            <constraint firstItem="Es6-PY-wBy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WSJ-cS-O9j"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Es6-PY-wBy" secondAttribute="bottom" id="eNC-hQ-u4K"/>
-                            <constraint firstItem="Es6-PY-wBy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ltU-Ag-HjQ"/>
+                            <constraint firstItem="Es6-PY-wBy" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ao2-yX-zfE"/>
+                            <constraint firstItem="LhV-9T-Ahk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CPC-EA-ytJ"/>
+                            <constraint firstItem="Es6-PY-wBy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="NYd-or-DhE"/>
+                            <constraint firstItem="Es6-PY-wBy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OsN-9E-WXN"/>
+                            <constraint firstItem="LhV-9T-Ahk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Zl3-d8-gPA"/>
+                            <constraint firstItem="Es6-PY-wBy" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dho-A6-MC7"/>
+                            <constraint firstItem="Es6-PY-wBy" firstAttribute="top" secondItem="LhV-9T-Ahk" secondAttribute="bottom" id="fQS-xT-Vx5"/>
+                            <constraint firstItem="LhV-9T-Ahk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vai-pR-lde"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -80,6 +91,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="LhV-9T-Ahk" id="TBk-5z-jE1"/>
                         <outlet property="tbl" destination="Es6-PY-wBy" id="Keo-sS-wZU"/>
                     </connections>
                 </viewController>

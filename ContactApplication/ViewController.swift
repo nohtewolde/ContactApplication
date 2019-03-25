@@ -8,19 +8,22 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetailVCDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate,DetailVCDelegate {
     
     var per : Person?
     var isNew : Bool?
     var modified : Bool?
     var row : Int?
-   
+    var isSearching = false
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tbl: UITableView!
+    var filteredData = [Person]()
     var contactList = [Person(name : "Anna", phone : "123456", email: "anna@disney.com", photo :  UIImage(named: "Anna")!), Person(name : "Belle", phone : "234567", email: "belle@disney.com", photo: UIImage(named: "Belle")!),Person(name : "Cinderella", phone : "345678", email: "cinderella@disney.com", photo: UIImage(named: "Cinderella")!), Person(name : "Diana", phone : "456789", email: "diana@nothinghampalace.com", photo: UIImage(named: "Diana")!), Person(name : "Elsa", phone : "567890", email: "elsa@disney.com", photo: UIImage(named: "Elsa")!)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        searchBar.delegate = self
+        searchBar.returnKeyType = UIReturnKeyType.done
     }
     
     func passingContactDetail(objPerson: Person, isModified: Bool, isNewContact: Bool, row: Int, section: Int){
@@ -67,16 +70,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if isSearching{
+            return filteredData.count
+        }
+        
         return contactList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tbl.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ContactDetailCell
-        let obj = contactList[indexPath.row]
-        cell?.ContactName.text = obj.name
-        cell?.PhoneNumber.text = obj.phone
-        cell?.Email = obj.email
-        cell?.Photo = obj.photo
+        var obj : Person?
+        if isSearching{
+            obj = filteredData[indexPath.row]
+        } else {
+            obj = contactList[indexPath.row]
+        }
+        cell?.ContactName.text = obj!.name
+        cell?.PhoneNumber.text = obj!.phone
+        cell?.Email = obj!.email
+        cell?.Photo = obj!.photo
         return cell!
     }
     
@@ -89,6 +102,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         vc?.isNewContact = false
         vc?.delegate = self
         navigationController?.pushViewController(vc!, animated: true)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == nil || searchBar.text == ""{
+            isSearching = false
+            view.endEditing(true)
+            tbl.reloadData()
+        } else {
+            isSearching = true
+            filteredData = contactList.filter({$0.name == searchBar.text})
+            tbl.reloadData()
+        }
     }
 }
 
