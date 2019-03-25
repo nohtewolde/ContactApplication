@@ -9,6 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetailVCDelegate {
+    
+    var per : Person?
+    var isNew : Bool?
+    var modified : Bool?
+    var row : Int?
    
     @IBOutlet weak var tbl: UITableView!
     var contactList = [Person(name : "Anna", phone : "123456", email: "anna@disney.com", photo :  UIImage(named: "Anna")!), Person(name : "Belle", phone : "234567", email: "belle@disney.com", photo: UIImage(named: "Belle")!),Person(name : "Cinderella", phone : "345678", email: "cinderella@disney.com", photo: UIImage(named: "Cinderella")!), Person(name : "Diana", phone : "456789", email: "diana@nothinghampalace.com", photo: UIImage(named: "Diana")!), Person(name : "Elsa", phone : "567890", email: "elsa@disney.com", photo: UIImage(named: "Elsa")!)]
@@ -34,7 +39,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func btnAddContact(_ sender: UIBarButtonItem) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVCViewController") as? DetailVCViewController
         vc?.isNewContact = true
-        vc?.delegate = self
+        //vc?.delegate = self
+        
+//        vc.didtapBlock = {
+//            [unowned self] (obj1, obj2) in self.lblLabel.text = obj2 as? String
+//        }
+
+        vc?.contactClosure = {
+            [unowned self] (obj1, obj2, obj3, obj4) in self.per = obj1 as? Person; self.isNew = obj2 as? Bool; self.modified = obj3 as? Bool; self.row = obj4 as! Int
+            if self.isNew! {
+                self.contactList.append(self.per!)
+            }
+            else if self.modified! {
+                self.contactList[self.row!].name = (self.per?.name)!
+                self.contactList[self.row!].phone = (self.per?.phone)!
+                self.contactList[self.row!].email = (self.per?.email)!
+                self.contactList[self.row!].photo = (self.per?.photo)!
+            }
+            self.tbl.reloadData()
+            
+        }
         navigationController?.pushViewController(vc!, animated: true)
     }
     func numberOfSections(in tableView: UITableView) -> Int {

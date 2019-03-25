@@ -9,6 +9,9 @@
 
 import UIKit
 
+// Closure to modify or add contact list
+public typealias ContactAdd = (_ obj1 : Any? ,_ obj2 : Any?,_ obj3 : Any?,_ obj4: Any?) -> ()
+
 // Using Delegate to pass
 protocol DetailVCDelegate: class {
     func passingContactDetail(objPerson : Person, isModified : Bool, isNewContact: Bool, row: Int, section: Int)
@@ -20,10 +23,11 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var imgPhoto: UIImageView!
     
+    var contactClosure: ContactAdd?
     var delegate: DetailVCDelegate?
     var person: Person?
-    var isNewContact : Bool? = Bool()       // If contact is new then add it to the list of contacts
-    var row : Int? = Int()                  // If it is existing contact keep its row and section data ...
+    var isNewContact = false      // If contact is new then add it to the list of contacts
+    var row : Int = 0                 // If it is existing contact keep its row and section data ...
     var section : Int? = Int()              // for potential modification
     var originalName : String? = String()
     var originalPhoneNumber : String? = String()
@@ -38,7 +42,7 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
         txtEmail.text = person?.email
         imgPhoto.image = person?.photo
         
-        if !(isNewContact)! {
+        if !(isNewContact) {
             originalName = person?.name
             originalPhoneNumber = person?.phone
             originalEmail = person?.email
@@ -48,14 +52,16 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
 
     @IBAction func btnSubmit(_ sender: UIButton) {
         let obj : Person = Person(name: txtContactName.text!, phone: txtPhoneNumber.text!, email: txtEmail.text!, photo: imgPhoto.image!)
-        if !isNewContact! {
+        if !isNewContact {
             modified = !(originalName == txtContactName.text && originalPhoneNumber == txtPhoneNumber.text && originalEmail == txtEmail.text && originalPhoto == imgPhoto.image )
-        }else if isNewContact!{
+        }else if isNewContact{
             modified = false
         }
             print("Modified is : \(modified)")
         
-        delegate?.passingContactDetail(objPerson: obj, isModified: modified, isNewContact: isNewContact!, row: row!, section: section!)
+        //delegate?.passingContactDetail(objPerson: obj, isModified: modified, isNewContact: isNewContact!, row: row!, section: section!)
+        
+        contactClosure!(obj, isNewContact, modified, row)
         navigationController?.popViewController(animated: true)
     }
     
