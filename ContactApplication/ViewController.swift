@@ -24,6 +24,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
+        searchBar.becomeFirstResponder()
     }
     
     func passingContactDetail(objPerson: Person, isModified: Bool, isNewContact: Bool, row: Int, section: Int){
@@ -108,12 +109,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if searchBar.text == nil || searchBar.text == ""{
             isSearching = false
             view.endEditing(true)
-            tbl.reloadData()
         } else {
             isSearching = true
-            filteredData = contactList.filter({$0.name == searchBar.text})
-            tbl.reloadData()
+            filteredData = contactList.filter({ ($0.name).range(of: searchBar.text ?? "", options:.caseInsensitive) != nil })
         }
+        tbl.reloadData()
     }
 }
 
