@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
         searchBar.becomeFirstResponder()
+        tbl.tableFooterView = UIView()
     }
     
     func passingContactDetail(objPerson: Person, isModified: Bool, isNewContact: Bool, row: Int, section: Int){
