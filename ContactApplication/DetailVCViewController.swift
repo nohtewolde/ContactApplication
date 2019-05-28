@@ -92,4 +92,17 @@ class DetailVCViewController: UIViewController, UIImagePickerControllerDelegate,
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func share(_ sender: Any) {
+        let string = txtContactName.text!
+        let url = URL(string: "https://nshipster.com")!
+        let image = imgPhoto.image!
+        
+        let activityViewController =
+            UIActivityViewController(activityItems: [string,image],
+                                     applicationActivities: nil)
+        
+        present(activityViewController, animated: true)
+    }
+
 }
